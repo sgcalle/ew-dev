@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="adm_template_application_menu_custom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!--      <a class="navbar-brand ml-1 w-auto" href="#" disabled="disabled" >-->
+<!--        <img src="https://uploads-ssl.webflow.com/5a0c87371726900001a45c31/5a502102b3d9e100018cb10f_Howard%20Academy%20VECTOR-p-500.png" alt="School Code" width="75" height="75"/>-->
+<!--      </a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navbarSupportedContent" style="font-size: medium;">
+        <ul class="navbar-nav mr-auto ml-auto">
+          <li class="nav-item border-right" id="nav-itm-instr">
+            <a t-att-href="'/admission/applications/{}/instructions-resources'.format(application_id)" class="nav-link" href="#">Instructions and Resources<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-appl">
+            <a t-att-href="'/admission/applications/{}/info'.format(application_id)" class="nav-link" href="#">Aplicant information</a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-lang">
+            <a t-att-href="'/admission/applications/{}/additional-student-info'.format(application_id)" class="nav-link" href="#">Languages test</a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-acad">
+            <a t-att-href="'/admission/applications/{}/previous-school'.format(application_id)" class="nav-link" href="#">Academic Information</a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-fam">
+            <a t-att-href="'/admission/applications/{}/family-info'.format(application_id)" class="nav-link" href="#">Family Information</a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-house">
+            <a t-att-href="'/admission/applications/{}/house-address'.format(application_id)" class="nav-link" href="#">House address</a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-med">
+            <a t-att-href="'/admission/applications/{}/medical-info'.format(application_id)" class="nav-link" href="#">Medical information</a>
+          </li>
+          <li class="nav-item border-right" id="nav-itm-sig">
+            <a t-att-href="'/admission/applications/{}/electronic-signature'.format(application_id)" class="nav-link" href="#">Signature information</a>
+          </li>
+
+          <t t-if="application.grade_level.name == ['PK1','PK2','PK3','PK4','Kinder']">
+            <li class="nav-item border-right" id="nav-itm-todd">
+              <a t-att-href="'/admission/applications/{}/document-toddlesrs'.format(application_id)" class="nav-link" href="#">Document Upload (Toddlesrs - Kinder)</a>
+            </li>
+          </t>
+
+          <t t-if="application.grade_level.name == ['01','02','03','04','05','06','07','08','09','10']">
+            <li class="nav-item border-right" id="nav-itm-one">
+              <a t-att-href="'/admission/applications/{}/document-1_9'.format(application_id)" class="nav-link" href="#">Document Upload (1st Grade – 9th Grade)</a>
+            </li>
+          </t>
+
+          <t t-if="application.grade_level.name in 'FOREIGN'">
+            <li class="nav-item border-right" id="nav-itm-fore">
+              <a t-att-href="'/admission/applications/{}/document-foreign'.format(application_id)" class="nav-link" href="#">Document Upload (Foreign students)</a>
+            </li>
+          </t>
+
+
+          <li class="nav-item" id="nav-itm-invoice">
+            <a t-att-href="'/admission/applications/{}/review'.format(application_id)" class="nav-link" href="#">Invoice</a>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+
+
+
+    <t t-if="application.status_id.type_id =='return' or application.status_id.type_id == 'started'">
+      <form t-att-action="'/admission/applications/{}/check'.format(application_id)" method="post" enctype="multipart/form-data" id="info-form">
+        <button class="btn btn-primary btn-lg fixed-bottom ml-auto mr-2 mb-2" style="left: auto !important;">Send to School &#10095;</button>
+      </form>
+      <t t-if="showPendingInformation">
+        <div class="modal show modal_shown" tabindex="-1" role="dialog" style="padding-right: 17px; display: block;" aria-modal="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Pending Tasks</h5>
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                  <ul>
+
+                    <t t-foreach="pendingData" t-as="itm">
+                      <li t-raw="itm"/>
+                    </t>
+                  </ul>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          function closeModal(){
+          $(".modal").modal('show');
+          $(".modal").modal('hide');
+          }
+        </script>
+      </t>
+    </t>
+  </template>
+</odoo>
