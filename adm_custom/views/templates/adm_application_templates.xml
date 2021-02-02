@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="template_application_menu" inherit_id="adm.template_application_menu">
+        <xpath expr="//div[@id='application_nav_bar']/ul" position="inside">
+            <li class="nav-item nav-item-menu" id="nav-itm-instr">
+                <a t-attf-href="/admission/applications/#{application_id.id}/photo-permission-grant-signature"
+                   class="nav-link">
+                    Photo permission grant signature
+                </a>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="template_photo_permission_grant_signature">
+        <t t-call="adm.template_application_form_commons">
+            <t t-set="title">Photo permission grant signature</t>
+
+            <t t-set="url_prev" t-value="'/admission/applications/%s/signature' % application_id.id"/>
+            <t t-set="url_next" t-value="'/admission/applications/%s/' % application_id.id"/>
+
+            <!-- Body -->
+
+            <p>
+                Photos and videos of students or their work may be featured in materials to increase awareness of AISJ,
+                engage the community, and/or recruit and train staff. This is done through print ads, online (AISJ
+                website/official social media outlets/other), displays, brochures, banners, flyers, posters, and other
+                types of media. Please select yes if you <strong>GRANT AISJ PERMISSION</strong> to use your child and
+                their work in various materials and media, as outlined here, for the duration of their attendance at the
+                school or for however long the material is being used, and if you release AISJ, its Board of Trustees,
+                and its employees from all claims, demands, and liabilities in connection with the above.
+                Please select no if you <strong>DO NOT GRANT AISJ PERMISSION</strong> for the same.
+                Please note that a student's participation in any event/concert/production or other activity,
+                that is publicized by AISJ, <strong>AUTOMATICALLY GRANTS</strong> AISJ permission to use that student's
+                picture in all publicized material (social media, website, videos, ads...) for that particular
+                event/activity.
+            </p>
+            <div class="row" data-adm-model-fields="1">
+                <div class="col-12 col-md-6">
+                    <div class="custom-control">
+                        <label>Grant AISJ Photo Permission?<span class="text-danger"> *</span></label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                                   data-adm-field="grant_aisj_photo_permission"
+                                   value="yes"
+                                   t-att-checked="application_id.grant_aisj_photo_permission"
+                                   id="grant_aisj_photo_permission_yes"
+                                   name="grant_aisj_photo_permission"/>
+                            <label class="for-check-label" for="grant_aisj_photo_permission_yes">Yes</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                                   data-adm-field="grant_aisj_photo_permission"
+                                   value=""
+                                   t-att-checked="not application_id.grant_aisj_photo_permission"
+                                   id="grant_aisj_photo_permission_no"
+                                   name="grant_aisj_photo_permission"/>
+                            <label class="for-check-label" for="grant_aisj_photo_permission_no">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="template_application_parent_questionnaire_form"
+              inherit_id="adm.template_application_parent_questionnaire_form">
+        <xpath expr="." position="replace">
+            <div>
+                <section class="card mb-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p>
+                                    The parent questionnaire will be looked at in conjunction with the contents of your
+                                    child's academic records, the information provided will give additional insight into
+                                    your child and a better picture of your child's academic abilities and needs. Please
+                                    answer all questions as completely as you can.
+                                    Please specify your child's strengths (1 being the lowest and 5 the highest)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                        <th>5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Math</td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_math"
+                                                   name="c_aisj_parent_quest_math" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_math == '1'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_math"
+                                                   name="c_aisj_parent_quest_math" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_math == '2'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_math"
+                                                   name="c_aisj_parent_quest_math" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_math == '3'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_math"
+                                                   name="c_aisj_parent_quest_math" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_math == '4'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_math"
+                                                   name="c_aisj_parent_quest_math" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_math == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>English</td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_english"
+                                                   name="c_aisj_parent_quest_english" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_english == '1'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_english"
+                                                   name="c_aisj_parent_quest_english" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_english == '2'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_english"
+                                                   name="c_aisj_parent_quest_english" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_english == '3'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_english"
+                                                   name="c_aisj_parent_quest_english" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_english == '4'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_english"
+                                                   name="c_aisj_parent_quest_english" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_english == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Languajes</td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_language"
+                                                   name="c_aisj_parent_quest_language" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_language == '1'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_language"
+                                                   name="c_aisj_parent_quest_language" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_language == '2'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_language"
+                                                   name="c_aisj_parent_quest_language" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_language == '3'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_language"
+                                                   name="c_aisj_parent_quest_language" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_language == '4'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_language"
+                                                   name="c_aisj_parent_quest_language" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_language == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sciences</td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_sciences"
+                                                   name="c_aisj_parent_quest_sciences" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_sciences == '1'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_sciences"
+                                                   name="c_aisj_parent_quest_sciences" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_sciences == '2'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_sciences"
+                                                   name="c_aisj_parent_quest_sciences" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_sciences == '3'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_sciences"
+                                                   name="c_aisj_parent_quest_sciences" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_sciences == '4'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_sciences"
+                                                   name="c_aisj_parent_quest_sciences" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_sciences == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>History</td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_history"
+                                                   name="c_aisj_parent_quest_history" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_history == '1'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_history"
+                                                   name="c_aisj_parent_quest_history" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_history == '2'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_history"
+                                                   name="c_aisj_parent_quest_history" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_history == '3'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_history"
+                                                   name="c_aisj_parent_quest_history" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_history == '4'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_history"
+                                                   name="c_aisj_parent_quest_history" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_history == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PE</td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_pe"
+                                                   name="c_aisj_parent_quest_pe" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_pe == '1'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_pe"
+                                                   name="c_aisj_parent_quest_pe" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_pe == '2'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_pe"
+                                                   name="c_aisj_parent_quest_pe" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_pe == '3'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_pe"
+                                                   name="c_aisj_parent_quest_pe" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_pe == '4'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_pe"
+                                                   name="c_aisj_parent_quest_pe" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_pe == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Arts</td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arts"
+                                                   name="c_aisj_parent_quest_arts" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arts == '1'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arts"
+                                                   name="c_aisj_parent_quest_arts" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arts == '2'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arts"
+                                                   name="c_aisj_parent_quest_arts" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arts == '3'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arts"
+                                                   name="c_aisj_parent_quest_arts" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arts == '4'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arts"
+                                                   name="c_aisj_parent_quest_arts" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arts == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Social Studies</td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_social_studies"
+                                                   name="c_aisj_parent_quest_social_studies" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_social_studies == '1'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_social_studies"
+                                                   name="c_aisj_parent_quest_social_studies" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_social_studies == '2'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_social_studies"
+                                                   name="c_aisj_parent_quest_social_studies" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_social_studies == '3'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_social_studies"
+                                                   name="c_aisj_parent_quest_social_studies" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_social_studies == '4'"/></td>
+                                        <td><input type="radio"
+                                                   data-adm-field="c_aisj_parent_quest_social_studies"
+                                                   name="c_aisj_parent_quest_social_studies" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_social_studies == '5'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Arabic</td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arabic"
+                                                   name="c_aisj_parent_quest_arabic" value="1"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arabic == '1'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arabic"
+                                                   name="c_aisj_parent_quest_arabic" value="2"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arabic == '2'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arabic"
+                                                   name="c_aisj_parent_quest_arabic" value="3"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arabic == '3'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arabic"
+                                                   name="c_aisj_parent_quest_arabic" value="4"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arabic == '4'"/></td>
+                                        <td><input type="radio" data-adm-field="c_aisj_parent_quest_arabic"
+                                                   name="c_aisj_parent_quest_arabic" value="5"
+                                                   t-att-checked="application_id.c_aisj_parent_quest_arabic == '5'"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="card mb-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6 form-group">
+                                <label>My child's challenges at school include</label>
+                                <input class="form-control" type="text"
+                                       data-adm-field="c_aisj_parent_questionaire_q1"
+                                       t-att-value="application_id.c_aisj_parent_questionaire_q1"/>
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <label>What extracurricular activities does your child participate in?</label>
+                                <input class="form-control" type="text"
+                                       data-adm-field="c_aisj_parent_questionaire_q2"
+                                       t-att-value="application_id.c_aisj_parent_questionaire_q2"/>
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Applicant's proficiency in English:</label>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           data-adm-field="c_aisj_parent_questionaire_q3"
+                                           name="c_aisj_parent_questionaire_q3"
+                                           value="fluent"
+                                           t-att-checked="application_id.c_aisj_parent_questionaire_q3 == 'fluent'"/>
+                                    <label class="form-check-label">Fluent</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           data-adm-field="c_aisj_parent_questionaire_q3"
+                                           name="c_aisj_parent_questionaire_q3"
+                                           value="limited"
+                                           t-att-checked="application_id.c_aisj_parent_questionaire_q3 == 'limited'"/>
+                                    <label class="form-check-label">Limited</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           data-adm-field="c_aisj_parent_questionaire_q3"
+                                           name="c_aisj_parent_questionaire_q3"
+                                           value="beginner"
+                                           t-att-checked="application_id.c_aisj_parent_questionaire_q3 == 'beginner'"/>
+                                    <label class="form-check-label">Beginner</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Has the applicant received any of the following programs?</label>
+                                <div t-foreach="applicant_programs_ids" t-as="applicant_programs_id" class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           data-adm-field="c_aisj_parent_questionaire_q4"
+                                           data-adm-field-type="MANY2MANY_CHECKBOX"
+                                           name="c_aisj_parent_questionaire_q4"
+                                           t-att-value="applicant_programs_id.id"
+                                           t-attf-id="c_aisj_parent_questionaire_q4-#{applicant_programs_id.id}"
+                                           t-att-checked="applicant_programs_id in application_id.c_aisj_parent_questionaire_q4"/>
+                                    <label class="form-check-label"
+                                           t-attf-for="c_aisj_parent_questionaire_q4-#{applicant_programs_id.id}">
+                                        <t t-esc="applicant_programs_id.name"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Has your child ever received additional support in-school or outside
+                                    of
+                                    school in the following areas?</label>
+                                <div t-foreach="additional_support_ids" t-as="additional_support_id" class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           data-adm-field="c_aisj_parent_questionaire_q5"
+                                           data-adm-field-type="MANY2MANY_CHECKBOX"
+                                           name="c_aisj_parent_questionaire_q5"
+                                           t-att-value="additional_support_id.id"
+                                           t-attf-id="c_aisj_parent_questionaire_q5-#{additional_support_id.id}"
+                                           t-att-checked="additional_support_id in application_id.c_aisj_parent_questionaire_q5"/>
+                                    <label class="form-check-label"
+                                           t-attf-for="c_aisj_parent_questionaire_q5-#{additional_support_id.id}">
+                                        <t t-esc="additional_support_id.name"/>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Why are you interested in AISJ for your child?</label>
+
+                                <div t-foreach="interested_options_ids" t-as="interested_options_id" class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           data-adm-field="c_aisj_parent_questionaire_q6"
+                                           data-adm-field-type="MANY2MANY_CHECKBOX"
+                                           name="c_aisj_parent_questionaire_q6"
+                                           t-att-value="interested_options_id.id"
+                                           t-attf-id="c_aisj_parent_questionaire_q6-#{interested_options_id.id}"
+                                           t-att-checked="interested_options_id in application_id.c_aisj_parent_questionaire_q6"/>
+                                    <label class="form-check-label"
+                                           t-attf-for="c_aisj_parent_questionaire_q6-#{interested_options_id.id}">
+                                        <t t-esc="interested_options_id.name"/>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>What experiences are you hoping your child will have at AISJ?</label>
+                                <textarea class="form-control" type="text"
+                                          data-adm-field="c_aisj_parent_questionaire_q7"
+                                          t-att-value="application_id.c_aisj_parent_questionaire_q7"/>
+
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>How did you hear about us?</label>
+                                <div t-foreach="how_hear_about_us_ids" t-as="how_hear_about_us_id" class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           data-adm-field="c_aisj_parent_questionaire_q8"
+                                           data-adm-field-type="MANY2MANY_CHECKBOX"
+                                           name="c_aisj_parent_questionaire_q8"
+                                           t-att-value="how_hear_about_us_id.id"
+                                           t-attf-id="c_aisj_parent_questionaire_q8-#{how_hear_about_us_id.id}"
+                                           t-att-checked="how_hear_about_us_id in application_id.c_aisj_parent_questionaire_q8"/>
+                                    <label class="form-check-label"
+                                           t-attf-for="c_aisj_parent_questionaire_q8-#{how_hear_about_us_id.id}">
+                                        <t t-esc="how_hear_about_us_id.name"/>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Is there anything you really want us to know about your family as you
+                                    apply to AISJ?</label>
+                                <input class="form-control" type="text"
+                                       data-adm-field="c_aisj_parent_questionaire_q9"
+                                       t-att-value="application_id.c_aisj_parent_questionaire_q9"/>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Has your family attended an Admissions visit or tour at AISJ?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           data-adm-field="c_aisj_parent_questionaire_q10"
+                                           name="c_aisj_parent_questionaire_q10"
+                                           value="yes"
+                                           t-att-checked="application_id.c_aisj_parent_questionaire_q10 == 'yes'"/>
+                                    <label class="form-check-label">Yes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           data-adm-field="c_aisj_parent_questionaire_q10"
+                                           name="c_aisj_parent_questionaire_q10"
+                                           value="no"
+                                           t-att-checked="application_id.c_aisj_parent_questionaire_q10 == 'no'"/>
+                                    <label class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section t-if="application_id.grade_level.user_type_id.type == 'elementary'" class="card mb-2">
+                    <!--                <section class="card mb-2">-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="custom-control">
+                                    <label>Has your child been previously enrolled in a daycare/preschool
+                                        program?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               data-adm-field="c_aisj_elementary_q1"
+                                               value="yes"
+                                               t-att-checked="application_id.c_aisj_elementary_q1"
+                                               id="c_aisj_elementary_q1_yes"
+                                               name="c_aisj_elementary_q1"/>
+                                        <label class="for-check-label" for="c_aisj_elementary_q1_yes">Yes</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               data-adm-field="c_aisj_elementary_q1"
+                                               value=""
+                                               t-att-checked="not application_id.c_aisj_elementary_q1"
+                                               id="c_aisj_elementary_q1_no"
+                                               name="c_aisj_elementary_q1"/>
+                                        <label class="for-check-label" for="c_aisj_elementary_q1_no">No</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row js_show_when_input"
+                                     data-target="input[name='c_aisj_elementary_q1']"
+                                     data-is-value="yes">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Age:</label>
+                                    <div class="col-sm-10">
+                                        <select required="required" class="form-control"
+                                                name="c_aisj_elementary_q1_age"
+                                                data-adm-field="c_aisj_elementary_q1_age"
+                                                data-adm-field-type="INTEGER">
+                                            <option value="0" selected="selected" disabled="disabled">
+                                                -Select a age-
+                                            </option>
+                                            <t t-foreach="range(1, 8)" t-as="age">
+                                                <option t-att-selected="application_id.c_aisj_elementary_q1_age == age"
+                                                        t-att-value="age">
+                                                    <t t-esc="age"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row js_show_when_input"
+                                     data-target="input[name='c_aisj_elementary_q1']"
+                                     data-is-value="yes">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Country:</label>
+                                    <div class="col-sm-10">
+                                        <select required="required" type="text"
+                                                id="country_id" name="c_aisj_elementary_q1_country_id" placeholder="Country"
+                                                data-adm-field="c_aisj_elementary_q1_country_id" data-adm-field-type="INTEGER"
+                                                class="form-control">
+                                            <option value="-1" selected="selected" disabled="disabled">
+                                                -Select a country-
+                                            </option>
+                                            <t t-foreach="country_ids" t-as="country">
+                                                <option t-att-selected="application_id.c_aisj_elementary_q1_country_id.id == country.id"
+                                                        t-att-value="country.id">
+                                                    <t t-esc="country.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="custom-control">
+                                    <label>
+                                        Is your child toilet trained?
+                                        <br/>
+                                        <small>
+                                            Your child should be able to use the toilet independently.
+                                            They must be able to pull pants up and down and handle cleaning
+                                            ( for Pre-K3 applicants).
+                                        </small>
+                                    </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               data-adm-field="c_aisj_elementary_q2"
+                                               value="yes"
+                                               t-att-checked="application_id.c_aisj_elementary_q2"
+                                               id="c_aisj_elementary_q2_yes"
+                                               name="c_aisj_elementary_q2"/>
+                                        <label class="for-check-label" for="c_aisj_elementary_q2_yes">Yes</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               data-adm-field="c_aisj_elementary_q2"
+                                               value=""
+                                               t-att-checked="not application_id.c_aisj_elementary_q2"
+                                               id="c_aisj_elementary_q2_no"
+                                               name="c_aisj_elementary_q2"/>
+                                        <label class="for-check-label" for="c_aisj_elementary_q2_no">No</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row js_show_when_input"
+                                     data-target="input[name='c_aisj_elementary_q2']"
+                                     data-is-value="yes">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Age:</label>
+                                    <div class="col-sm-10">
+                                        <select required="required" class="form-control"
+                                                name="c_aisj_elementary_q2_age"
+                                                data-adm-field="c_aisj_elementary_q2_age"
+                                                data-adm-field-type="INTEGER">
+                                            <option value="0" selected="selected" disabled="disabled">
+                                                -Select a age-
+                                            </option>
+                                            <t t-foreach="range(1, 8)" t-as="age">
+                                                <option t-att-selected="application_id.c_aisj_elementary_q2_age == age"
+                                                        t-att-value="age">
+                                                    <t t-esc="age"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="custom-control">
+                                    <label>Does your child communicate using words/phrases?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               data-adm-field="c_aisj_elementary_q3"
+                                               value="yes"
+                                               t-att-checked="application_id.c_aisj_elementary_q3"
+                                               id="c_aisj_elementary_q3_yes"
+                                               name="c_aisj_elementary_q3"/>
+                                        <label class="for-check-label" for="c_aisj_elementary_q3_yes">Yes</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               data-adm-field="c_aisj_elementary_q3"
+                                               value=""
+                                               t-att-checked="not application_id.c_aisj_elementary_q3"
+                                               id="c_aisj_elementary_q3_no"
+                                               name="c_aisj_elementary_q3"/>
+                                        <label class="for-check-label" for="c_aisj_elementary_q3_no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Is your child able to separate from you easily?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q4">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q4 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child express appropriate emotions depending on his</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q5">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q5 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child make eye contact while speaking or playing with you?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q6">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q6 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child interact and engage with other children?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q7">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q7 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child interact and engage with familiar adults?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q8">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q8 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child eat regular meals and snack independently?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q9">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q9 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child sleep in regular routines (naps, nighttime)?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q10">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q10 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child show interest in a variety of activities?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q11">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q11 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child focus on one activity for more than 10 minutes (not including TV)?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q12">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q12 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child follow simple instructions?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q13">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q13 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 form-group">
+                                <label>Does your child follow rules (at home, or at school)?</label>
+                                <select class="form-control" data-adm-field="c_aisj_elementary_q14">
+                                    <option disabled="disabled" selected="disabled" value="">-Select a option-</option>
+                                    <t t-foreach="elementary_selection_questions_vals" t-as="elementary_selection_questions_val">
+                                        <option t-att-selected="application_id.c_aisj_elementary_q14 == elementary_selection_questions_val['value']"
+                                                t-att-value="elementary_selection_questions_val['value']">
+                                            <t t-esc="elementary_selection_questions_val['name']"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="template_application_siblings_form" inherit_id="adm.template_application_siblings_form">
+        <xpath expr="//div[@class='row'][1]" position="replace">
+
+        </xpath>
+    </template>
+</odoo>
