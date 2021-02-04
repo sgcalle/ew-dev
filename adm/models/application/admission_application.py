@@ -83,7 +83,8 @@ class Application(models.Model):
     birth_country = fields.Many2one("res.country", string="Birth Country", related="partner_id.country_id")
     birth_city = fields.Char("Birth City", related="partner_id.city")
     gender = fields.Many2one("adm.gender", string="Gender", related="partner_id.gender", inverse="_set_gender")
-    # status_history_ids = fields.One2many('adm.application.history.status', 'application_id', string="Status history")
+    status_history_ids = fields.One2many('adm.application.history.status', 'application_id', string="Status history")
+    last_time_submitted = fields.Datetime(compute='_compute_last_time_submitted', store=True)
     family_id = fields.Many2one('res.partner', domain="[('is_family', '=', True)]", required=True)
 
     finish_datetime = fields.Datetime(compute='_compute_finish_date', store=True)
@@ -96,6 +97,8 @@ class Application(models.Model):
         compute="compute_responsible_user_kanban",
         string="Responsible User")
 
+    is_current_school_year = fields.Boolean(string="Current school year", compute='_compute_current_school_year', search='_search_current_school_year')
+
     def compute_responsible_user_kanban(self):
         for application_id in self:
             application_id.responsible_user_kanban_ids = application_id.responsible_user_id
@@ -107,6 +110,32 @@ class Application(models.Model):
         res = super().default_get(fields)
         a = 0
         return res
+
+    def _search_current_school_year(self, operator, value):
+        current_school_year_id = int(self.env['ir.config_parameter'].sudo().get_param('adm.adm_current_school_year', False))
+        current_school_year = self.env['school_base.school_year'].browse(current_school_year_id)
+
+        if value:
+            operator = '='
+        else:
+            operator = '!='
+
+        return [('school_year', operator, current_school_year.id)]
+
+    def _compute_current_school_year(self):
+        for application_id in self:
+            current_school_year_id = int(self.env['ir.config_parameter'].sudo().get_param('adm.adm_current_school_year', False))
+            current_school_year = self.env['school_base.school_year'].browse(current_school_year_id)
+            application_id.is_current_school_year = (application_id.school_year
+                                                     or current_school_year
+                                                     or application_id.school_year == current_school_year)
+
+
+    @api.depends('status_history_ids')
+    def _compute_last_time_submitted(self):
+        for application_id in self:
+            submitted_status = application_id.status_history_ids.filtered(lambda sh: sh.status_id.type_id == 'submitted')[:1]
+            application_id.last_time_submitted = submitted_status.timestamp
 
     @api.depends('status_id', 'status_id.type_id')
     def _compute_finish_date(self):
@@ -256,8 +285,7 @@ class Application(models.Model):
     contact_time_id = fields.Many2one("adm.contact_time", string="Preferred contact time")
 
     partner_id = fields.Many2one("res.partner", string="Contact")
-    status_id = fields.Many2one("adm.application.status",
-                                string="Status", group_expand="_read_group_status_ids")
+    status_id = fields.Many2one("adm.application.status", string="Status", group_expand="_read_group_status_ids")
     task_ids = fields.Many2many("adm.application.task")
 
     inquiry_id = fields.Many2one("adm.inquiry")
@@ -506,11 +534,12 @@ class Application(models.Model):
         message = _("Application created in [%s] status") % status_id.name
         timestamp = datetime.datetime.now()
 
-        # self.env['adm.application.history.status'].sudo().create({
-        #     'note': message,
-        #     'timestamp': timestamp,
-        #     'application_id': application_id.id,
-        #     })
+        self.env['adm.application.history.status'].sudo().create({
+            'note': message,
+            'timestamp': timestamp,
+            'application_id': application_id.id,
+            'status_id': status_id.id,
+            })
 
         if status_id.mail_template_id:
             application_id.message_post_with_template(template_id=status_id.mail_template_id.id, res_id=application_id.id)
@@ -556,11 +585,12 @@ class Application(models.Model):
                 message = _("From [%s] to [%s] status") % (application_id.status_id.name, next_status_id.name)
                 timestamp = datetime.datetime.now()
 
-                # self.env['adm.application.history.status'].sudo().create({
-                #     'note': message,
-                #     'timestamp': timestamp,
-                #     'application_id': application_id.id,
-                #     })
+                self.env['adm.application.history.status'].sudo().create({
+                    'note': message,
+                    'timestamp': timestamp,
+                    'application_id': application_id.id,
+                    'status_id': next_status_id.id,
+                    })
 
                 if next_status_id.mail_template_id:
                     application_id.message_post_with_template(template_id=next_status_id.mail_template_id.id, res_id=application_id.id)

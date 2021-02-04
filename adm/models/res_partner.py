@@ -52,5 +52,3 @@ class ResPartnerExtended(models.Model):
     school_name = fields.Char()
     degree = fields.Char()
     first_language = fields.Char()
-
-
