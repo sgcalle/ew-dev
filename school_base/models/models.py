@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from odoo.addons.school_base.models.res_partner import SELECT_STATUS_TYPES
+
+
+# from odoo.addons.school_base.models.res_partner import SELECT_STATUS_TYPES
 
 
 class SchoolCode(models.Model):

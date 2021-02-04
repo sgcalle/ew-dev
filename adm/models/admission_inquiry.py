@@ -64,7 +64,6 @@ class Inquiry(models.Model):
     grade_level_id = fields.Many2one("school_base.grade_level", string="Grade Level", domain=[('active_admissions', '=', True)])
     responsible_id = fields.Many2many("res.partner")
 
-
     preferred_degree_program = fields.Many2one("adm.degree_program",
                                                string="Preferred Degree Program")
 
